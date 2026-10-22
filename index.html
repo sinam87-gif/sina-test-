@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dental Practice Analyzer</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f2f5fa;font-family:Arial,sans-serif;color:#172b42}
+header{background:#102b46;color:white;padding:30px 20px;text-align:center}
+h1{font-size:24px;margin:0 0 10px}
+main{max-width:600px;margin:20px auto;padding:0 15px}
+.card{background:white;padding:22px;border-radius:16px;margin-bottom:18px;box-shadow:0 4px 15px #0001}
+label{display:block;margin:15px 0 7px;font-weight:bold}
+input{width:100%;padding:14px;border:1px solid #ccd5df;border-radius:9px;font-size:17px}
+.result{background:#eaf4ff;padding:17px;border-radius:12px;margin:12px 0}
+.result span{display:block;font-size:13px;color:#526477}
+.result strong{display:block;font-size:24px;margin-top:7px}
+small{color:#667;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>🦷 Dental Practice Analyzer</h1>
+<p>Deine erste Test-App</p>
+</header>
+<main>
+<div class="card">
+<h2>Praxisdaten</h2>
+<label>Praxisname</label>
+<input id="name" value="Musterpraxis Köln">
+<label>Jahresumsatz (€)</label>
+<input id="revenue" type="number" value="1200000">
+<label>Jährliche Kosten (€)</label>
+<input id="costs" type="number" value="950000">
+<label>Kaufpreis (€)</label>
+<input id="price" type="number" value="800000">
+</div>
+<div class="card">
+<h2>Wirtschaftlichkeitsanalyse</h2>
+<div class="result"><span>Jahresüberschuss</span><strong id="profit"></strong></div>
+<div class="result"><span>Überschussmarge</span><strong id="margin"></strong></div>
+<div class="result"><span>Kaufpreis / Überschuss</span><strong id="multiple"></strong></div>
+<small>Vereinfachte Berechnung. Keine vollständige Praxisbewertung.</small>
+</div>
+</main>
+<script>
+const euro=n=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+function calculate(){
+const r=Number(document.getElementById('revenue').value)||0;
+const c=Number(document.getElementById('costs').value)||0;
+const p=Number(document.getElementById('price').value)||0;
+const profit=r-c;
+document.getElementById('profit').textContent=euro(profit);
+document.getElementById('margin').textContent=r?((profit/r)*100).toFixed(1)+' %':'–';
+document.getElementById('multiple').textContent=profit>0?(p/profit).toFixed(2)+' x':'–';
+}
+['revenue','costs','price'].forEach(id=>document.getElementById(id).addEventListener('input',calculate));
+calculate();
+</script>
+</body>
+</html>
